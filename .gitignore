@@ -4,4 +4,6 @@
 *.so
 *.a
 *.out
+
+bazel-*
 /external

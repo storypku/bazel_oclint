@@ -1,0 +1,4 @@
+build --cxxopt="-std=c++17"
+
+build:oclint --aspects=//:oclint.bzl%my_oclint_aspect
+build:oclint --output_groups=oclint_output
