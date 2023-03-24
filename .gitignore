@@ -1,0 +1,7 @@
+# Prerequisites
+*.d
+*.o
+*.so
+*.a
+*.out
+/external
