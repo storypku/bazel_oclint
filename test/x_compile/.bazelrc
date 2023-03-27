@@ -1,0 +1,8 @@
+build --incompatible_enable_cc_toolchain_resolution
+
+build:oclint --aspects=//:oclint.bzl%my_oclint_aspect
+build:oclint --output_groups=oclint_report
+
+build:j5_cross --platforms=//:j5_cross_platform
+build:j5_cross --extra_toolchains=@j5_cross_toolchain//:cc-toolchain-aarch64-linux
+build:j5_cross --copt="-D__J5__=1"

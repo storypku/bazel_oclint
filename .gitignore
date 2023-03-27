@@ -7,4 +7,4 @@
 *.plist
 
 bazel-*
-/external
+external

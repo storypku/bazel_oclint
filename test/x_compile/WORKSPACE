@@ -1,0 +1,59 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+lxt_version = "0.0.1"
+
+http_archive(
+    name = "llvm_x_toolchain",
+    sha256 = "5b06e565b95a7c62ef7e36de92be24b69947a1ea39ef5fa9788573b47594b7bf",
+    strip_prefix = "llvm-x-toolchain-{}".format(lxt_version),
+    urls = [
+        "https://github.com/storypku/llvm-x-toolchain/archive/refs/tags/{}.tar.gz".format(lxt_version),
+    ],
+)
+
+load("@llvm_x_toolchain//bazel:repositories.bzl", "llvm_x_toolchain_repositories")
+
+llvm_x_toolchain_repositories(llvm_version = "13.0.1")
+
+load("@llvm_x_toolchain//bazel:llvm_x_toolchain_init.bzl", "llvm_x_toolchain_init")
+
+llvm_x_toolchain_init()
+
+http_archive(
+    name = "chromium_sysroot_linux_aarch64",
+    build_file = "//third_party:chromium_sysroot.BUILD",
+    sha256 = "2e3a344f48da76b6532f3de86759f94359292143ccaf6094814e09441a36629f",
+    urls = [
+        "https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/0e28d9832614729bb5b731161ff96cb4d516f345/debian_bullseye_arm64_sysroot.tar.xz",
+    ],
+)
+
+# Setup toolchains
+load("@llvm_x_toolchain//toolchain:rules.bzl", "llvm_toolchain")
+
+llvm_toolchain(
+    name = "llvm_toolchain",
+    stdlib = {
+        "": "stdc++",
+    },
+)
+
+load("@llvm_toolchain//:toolchains.bzl", "llvm_register_toolchains")
+
+llvm_register_toolchains()
+
+llvm_toolchain(
+    name = "j5_cross_toolchain",
+    sysroot = {
+        "linux-aarch64": "@chromium_sysroot_linux_aarch64//:sysroot",
+    },
+)
+
+local_repository(
+    name = "bazel_oclint",
+    path = "../..",
+)
+
+load("@bazel_oclint//:deps.bzl", "oclint_deps")
+
+oclint_deps()
