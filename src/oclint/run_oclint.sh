@@ -86,6 +86,7 @@ function main() {
   else
     retcode=$?
     error "Running OCLint failed, ret=${retcode}"
+    error "${OCLINT_BINARY} ${SRCS[*]} --report-type json -o ${OUTFILE} -- $*"
     error "OCLint exit codes:"
     error "  0 - SUCCESS"
     error "  1 - RULE_NOT_FOUND"

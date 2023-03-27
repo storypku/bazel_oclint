@@ -48,6 +48,9 @@ def _run_oclint(ctx, oclint_wrapper, oclint_config, compile_flags, target, srcs)
         arguments = [args],
         mnemonic = "OCLint",
         progress_message = "Run OCLint on {}".format(target.label),
+        execution_requirements = {
+            "no-sandbox": "1",
+        },
     )
     return outfile
 
