@@ -4,6 +4,7 @@
 *.so
 *.a
 *.out
+*.plist
 
 bazel-*
 /external

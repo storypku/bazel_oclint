@@ -2,3 +2,6 @@ local_repository(
     name = "bazel_oclint",
     path = "../..",
 )
+
+load("@bazel_oclint//:deps.bzl", "oclint_deps")
+oclint_deps()

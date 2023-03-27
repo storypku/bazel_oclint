@@ -1,4 +1,5 @@
 # Ref: https://gist.github.com/christophmeissner/0552296952d511aca0d8d3dd82814ae8
-
-report-type: json
-
+# NOTE(storypku):
+#   1. Only JSON reporter is supported at the moment.
+#      Other report types specified here would got overwritten.
+# report-type: json
