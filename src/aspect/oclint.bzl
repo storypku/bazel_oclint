@@ -73,7 +73,14 @@ def oclint_aspect_impl(target, ctx):
     oclint_config = ctx.attr._config.files.to_list()
     recursive = ctx.attr._recursive
 
-    outputs = [_run_oclint(ctx, oclint_wrapper, oclint_config, safe_flags, target, srcs)]
+    reports = [_run_oclint(ctx, oclint_wrapper, oclint_config, safe_flags, target, srcs)]
+
+    if ctx.attr._recursive:
+        transitive_reports = [dep[OutputGroupInfo].oclint_report for dep in ctx.rule.attr.deps]
+    else:
+        transitive_reports = []
+
+    accumulated_reports = depset(direct = reports, transitive = transitive_reports)
     return [
-        OutputGroupInfo(oclint_report = depset(direct = outputs)),
+        OutputGroupInfo(oclint_report = accumulated_reports),
     ]
