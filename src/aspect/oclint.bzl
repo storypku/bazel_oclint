@@ -48,6 +48,7 @@ def _run_oclint(ctx, oclint_wrapper, oclint_config, compile_flags, target, srcs)
         arguments = [args],
         mnemonic = "OCLint",
         progress_message = "Run OCLint on {}".format(target.label),
+        # It seems that the "no-sandbox" execution requirements is mandatory for X-compilation support
         execution_requirements = {
             "no-sandbox": "1",
         },
